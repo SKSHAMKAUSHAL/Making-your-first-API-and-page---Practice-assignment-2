@@ -2,6 +2,8 @@
 const express = require('express');
 const app = express();
 
+
+
 /*
 Task:
 You need to create an API that helps users understand different HTTP status codes and their meanings.
@@ -64,26 +66,22 @@ const messages = {
   502: "The server received an invalid response from the upstream server.",
   503: "Server temporarily overloaded or under maintenance.",
   504: "The server did not receive a timely response from the upstream server."
-
 }
 
-app.get('/status-info', (req,res)=>{
+app.get('/status-info', (req, res)=>{
   const code = parseInt(req.query.code)
 
- if(!code || !messages[code]){
-  return res.status(400).json({
+  if(!code || !messages[code]){
+    return res.status(400).json({
       error: 'bad request',
-      message : `Code does not exist`
+      message: 'Code does not exist'
+    })
+  }
+  res.json({
+    status: code,
+    message: messages[code]
   })
- }
-
- res.json({
-  status: code,
-  message: messages[code]
- })
 })
-
-
 
 const PORT = 3000;
 app.listen(PORT, () => {
